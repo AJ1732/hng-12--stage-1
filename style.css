@@ -43,6 +43,22 @@
   --body-font: "Prompt", serif;
 }
 
+::selection {
+  color: white;
+  background: var(--primary-700);
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary-700);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 100vw;
+}
+
 html {
   color: var(--foreground);
   background-color: var(--background);
@@ -100,6 +116,12 @@ button:active {
   aspect-ratio: 1/1;
 }
 
+/* DISPLAY FLEX */
+main,
+.game__details {
+  display: flex;
+}
+
 .title {
   font-family: var(--heading-font);
   font-weight: 900;
@@ -112,7 +134,6 @@ main {
   min-height: calc(100svh - 8.5rem);
   padding-bottom: 2.5rem;
 
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -201,7 +222,6 @@ main {
 }
 
 .game__details {
-  display: flex;
   width: 100%;
   align-items: flex-start;
   justify-content: space-between;
@@ -275,7 +295,14 @@ main {
   }
 }
 
-.wrong-guess {
+.status--wrong {
+  color: red;
+}
+.status--correct {
+  color: green;
+}
+
+.guess--wrong {
   animation: bouncyScale 0.6s ease-in-out forwards;
 }
 @keyframes bouncyScale {

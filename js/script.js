@@ -91,7 +91,7 @@ class ColourGuess {
 
   startNewGame() {
     this.colors = [];
-    // this.statusElement.textContent = "";
+    this.statusElement.textContent = "Ready Set Go!";
     this.statusElement.className = "game__status";
 
     const tColor = this.generateRandomColor();
@@ -138,9 +138,10 @@ class ColourGuess {
   handleGuess(guessedColor) {
     if (guessedColor === this.targetColor) {
       this.score++;
-      this.scoreElement.textContent = `Score: ${this.score}`;
+      this.scoreElement.textContent = `${this.score}`;
       this.updateHighScore();
       this.statusElement.textContent = "Correct!";
+      this.statusElement.className = "status--correct";
       setTimeout(() => this.startNewGame(), 500);
     } else {
       this.resetGame();
@@ -149,7 +150,8 @@ class ColourGuess {
       );
 
       if (wrongButton) {
-        wrongButton.classList.add("wrong-guess");
+        wrongButton.classList.add("guess--wrong");
+        this.statusElement.className = "status--wrong";
       }
 
       this.statusElement.textContent = "Wrong! Try again";
@@ -163,9 +165,6 @@ class ColourGuess {
       this.highScore = this.score;
       this.saveHighScore();
       this.updateHighScoreDisplay();
-      setTimeout(() => {
-        this.highScoreElement.classList.remove("highscore--new");
-      }, 500);
     }
   }
 }
