@@ -295,11 +295,41 @@ main {
   }
 }
 
+.game__status,
+.status--wrong,
+.status--correct {
+  font-size: var(--fs-lg);
+}
+
 .status--wrong {
   color: red;
 }
+.status--wrong__anim {
+  animation: shake 0.2s;
+}
 .status--correct {
   color: green;
+  animation: fadeIn 0.5s cubic-bezier(1, -0.04, 0, 1.16);
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
 .guess--wrong {

@@ -142,16 +142,23 @@ class ColourGuess {
       this.updateHighScore();
       this.statusElement.textContent = "Correct!";
       this.statusElement.className = "status--correct";
-      setTimeout(() => this.startNewGame(), 500);
+      setTimeout(() => this.startNewGame(), 1000);
     } else {
+      this.optionsContainer
+        .querySelectorAll('[data-testid="colorOption"]')
+        .forEach((button) => {
+          button.classList.remove("status--wrong__anim");
+        });
+
       this.resetGame();
       const wrongButton = Array.from(this.optionsContainer.children).find(
         (button) => button.style.backgroundColor === guessedColor
       );
 
       if (wrongButton) {
+        void wrongButton.offsetWidth;
         wrongButton.classList.add("guess--wrong");
-        this.statusElement.className = "status--wrong";
+        this.statusElement.className = "status--wrong status--wrong__anim";
       }
 
       this.statusElement.textContent = "Wrong! Try again";
