@@ -226,22 +226,38 @@ main {
 
 .game__details {
   width: 100%;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .game__details {
+    flex-direction: row;
+  }
 }
 .game__details p:has([data-testid="score"]) {
   margin-top: 0.5rem;
 }
 
 .game__scores {
-  flex-direction: column;
   align-items: flex-end;
-}
-.game__scores p {
+  gap: 1rem;
   width: 100%;
   justify-content: space-between;
 }
+.game__scores > div {
+  width: 100%;
+  max-width: 10rem;
+}
+.game__scores p {
+  justify-content: space-between;
+  gap: 2rem;
+}
 @media (min-width: 768px) {
+  .game__scores {
+    width: fit-content;
+  }
   .game__scores p {
     font-size: var(--fs-md);
   }
@@ -274,6 +290,7 @@ main {
   padding: 0.825rem 2rem;
   background-color: var(--secondary-500);
   border-radius: 0.125rem;
+  white-space: nowrap;
 }
 [data-testid="newGameButton"]:hover {
   background-color: var(--primary-500);
