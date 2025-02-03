@@ -118,7 +118,10 @@ button:active {
 
 /* DISPLAY FLEX */
 main,
-.game__details {
+.game__details,
+.game__scores,
+.game__scores p,
+footer {
   display: flex;
 }
 
@@ -226,8 +229,22 @@ main {
   align-items: flex-start;
   justify-content: space-between;
 }
-.game__details p:has(.game__highscore) {
-  margin-bottom: 0.5rem;
+.game__details p:has([data-testid="score"]) {
+  margin-top: 0.5rem;
+}
+
+.game__scores {
+  flex-direction: column;
+  align-items: flex-end;
+}
+.game__scores p {
+  width: 100%;
+  justify-content: space-between;
+}
+@media (min-width: 768px) {
+  .game__scores p {
+    font-size: var(--fs-md);
+  }
 }
 
 .game__direction {
@@ -249,7 +266,7 @@ main {
     max-width: 30rem;
   }
   .game__instructions p {
-    font-size: var(--fs-xl);
+    font-size: var(--fs-lg);
   }
 }
 
@@ -260,6 +277,21 @@ main {
 }
 [data-testid="newGameButton"]:hover {
   background-color: var(--primary-500);
+}
+@media (min-width: 768px) {
+  [data-testid="newGameButton"] {
+    font-size: var(--fs-md);
+  }
+}
+
+footer {
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  footer {
+    justify-content: flex-start;
+  }
 }
 
 .footer__text {
