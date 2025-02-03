@@ -88,6 +88,10 @@ a:visited {
 
 button {
   all: unset;
+  cursor: pointer;
+}
+button:active {
+  scale: 0.98;
 }
 
 /* ROUNDED BORDER RADIUS */
@@ -98,7 +102,7 @@ button {
 }
 
 /* MARGIN BOTTOM */
-.game__score,
+.game__details,
 .game__instructions {
   margin-bottom: auto;
 }
@@ -119,7 +123,7 @@ button {
 
 main {
   min-height: calc(100svh - 8.5rem);
-  padding-block: 1.5rem;
+  padding-bottom: 2.5rem;
 
   display: flex;
   flex-direction: column;
@@ -201,8 +205,18 @@ main {
   font-family: var(--heading-font);
 }
 
-.game__score {
-  align-self: flex-end;
+.game__details {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.game__details p:has(.game__score--high) {
+  margin-bottom: 0.5rem;
+}
+
+.game__direction {
+  color: var(--dark);
 }
 
 .game__instructions {
@@ -222,6 +236,15 @@ main {
   .game__instructions p {
     font-size: var(--fs-xl);
   }
+}
+
+[data-testid="newGameButton"] {
+  padding: 0.825rem 2rem;
+  background-color: var(--secondary-500);
+  border-radius: 0.125rem;
+}
+[data-testid="newGameButton"]:hover {
+  background-color: var(--primary-500);
 }
 
 .footer__text {

@@ -53,6 +53,14 @@
     <title>Color Guess | HNG 12 Stage 1</title>
     <!-- LINK TO CSS -->
     <link rel="stylesheet" href="style.css" />
+    <!-- LINK TO FONT AWESOME ICONS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body class="layout">
     <header>
@@ -62,7 +70,21 @@
     </header>
 
     <main>
-      <section class="game__score">Score: 10</section>
+      <section class="game__details">
+        <div>
+          <p class="game__direction">
+            Instructions below <i class="fa-solid fa-circle-chevron-down"></i>
+          </p>
+        </div>
+
+        <div>
+          <p>Score: <span class="game__score">10</span></p>
+          <p>
+            High Score: <span class="game__score game__score--high">10</span>
+          </p>
+          <button data-testid="newGameButton">New Game</button>
+        </div>
+      </section>
 
       <section class="game__display">
         <button data-testid="colorOption"></button>
