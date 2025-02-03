@@ -55,10 +55,49 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="layout">
-    <h1 class="title">
-      <em>Colour Guess <span class="title__dot">.</span></em>
-    </h1>
+    <header>
+      <h1 class="title">
+        <em>Colour Guess <span class="title__dot">.</span></em>
+      </h1>
+    </header>
 
+    <main>
+      <section class="game__score">Score: 10</section>
+
+      <section class="game__display">
+        <button data-testid="colorOption"></button>
+        <button data-testid="colorOption"></button>
+        <button data-testid="colorOption"></button>
+        <button data-testid="colorOption"></button>
+        <button data-testid="colorOption"></button>
+        <button data-testid="colorOption"></button>
+
+        <div data-testid="colorBox"></div>
+      </section>
+
+      <section class="game__instructions">
+        <h2>
+          <em data-testid="gameInstructions">“Guess the correct color!“</em>
+        </h2>
+        <p>
+          Guess the correct color from the set of six colors around the color
+          above by clicking/tapping on the button
+        </p>
+      </section>
+    </main>
+
+    <footer class="layout | footer">
+      <p class="footer__text">
+        Engineered by
+        <a
+          href="https://1732-portfolio.netlify.app/"
+          target="_blank"
+          class="footer__stamp"
+        >
+          <span>17</span>32
+        </a>
+      </p>
+    </footer>
     <script src="./js/script.js"></script>
   </body>
 </html>
