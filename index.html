@@ -73,37 +73,34 @@
       <section class="game__details">
         <div>
           <p class="game__direction">
-            Instructions below <i class="fa-solid fa-circle-chevron-down"></i>
+            <a href="#instructions">
+              Instructions below <i class="fa-solid fa-circle-chevron-down"></i>
+            </a>
           </p>
+          <p class="game__status" data-testid="gameStatus">Ready Set Go!</p>
         </div>
 
         <div>
-          <p>Score: <span class="game__score">10</span></p>
-          <p>
-            High Score: <span class="game__score game__score--high">10</span>
-          </p>
+          <p>Score: <span data-testid="score">0</span></p>
+          <p>High Score: <span class="game__highscore">0</span></p>
           <button data-testid="newGameButton">New Game</button>
         </div>
       </section>
 
       <section class="game__display">
-        <button data-testid="colorOption"></button>
-        <button data-testid="colorOption"></button>
-        <button data-testid="colorOption"></button>
-        <button data-testid="colorOption"></button>
-        <button data-testid="colorOption"></button>
-        <button data-testid="colorOption"></button>
+        <!-- APPEND COLOR OPTION BUTTON WITH JAVASCRIPT -->
+        <div class="game__options__container"></div>
 
         <div data-testid="colorBox"></div>
       </section>
 
-      <section class="game__instructions">
+      <section id="instructions" class="game__instructions">
         <h2>
           <em data-testid="gameInstructions">“Guess the correct color!“</em>
         </h2>
         <p>
-          Guess the correct color from the set of six colors around the color
-          above by clicking/tapping on the button
+          Guess the correct color from the set of six colors around the target
+          color above by clicking/tapping on the button
         </p>
       </section>
     </main>
