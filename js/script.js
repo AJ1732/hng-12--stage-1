@@ -51,7 +51,6 @@ class ColourGuess {
   }
 
   rgbToString(color) {
-    console.log(color);
     return `rgb(${color.r}, ${color.g}, ${color.b})`;
   }
 
@@ -104,6 +103,13 @@ class ColourGuess {
       if (!this.colors.includes(newColor)) {
         this.colors.push(newColor);
       }
+    }
+
+    if (this.score === 0) {
+      console.log("Invisible");
+      this.newGameButton.classList.add("game__start");
+    } else {
+      this.newGameButton.classList.remove("game__start");
     }
 
     this.colors.sort(() => Math.random() - 0.5);

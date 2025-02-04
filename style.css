@@ -300,6 +300,12 @@ main {
     font-size: var(--fs-md);
   }
 }
+.game__start {
+  background-color: red;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
 
 footer {
   justify-content: center;
