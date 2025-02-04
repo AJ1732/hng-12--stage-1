@@ -106,7 +106,6 @@ class ColourGuess {
     }
 
     if (this.score === 0) {
-      console.log("Invisible");
       this.newGameButton.classList.add("game__start");
     } else {
       this.newGameButton.classList.remove("game__start");
