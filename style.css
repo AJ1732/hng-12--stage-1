@@ -89,21 +89,6 @@ a:visited {
   width: fit-content;
 }
 
-a.credit--author {
-  color: var(--primary-700);
-}
-a.credit--author:hover {
-  text-decoration: underline;
-}
-
-a.credit--source {
-  padding-inline: 0.5rem;
-  background-color: var(--secondary-700);
-}
-a.credit--source:hover {
-  text-decoration: underline;
-}
-
 button {
   all: unset;
   cursor: pointer;
@@ -465,4 +450,28 @@ footer {
 }
 .layout > * {
   grid-column: content;
+}
+
+a.credit--author {
+  color: var(--primary-700);
+}
+a.credit--author:hover {
+  text-decoration: underline;
+}
+
+a.credit--source {
+  padding-inline: 0.5rem;
+  background-color: var(--secondary-700);
+}
+a.credit--source:hover {
+  text-decoration: underline;
+}
+
+.credit {
+  display: grid;
+  /* grid-template-columns: 4rem 1fr; */
+  align-items: start;
+  gap: 1rem;
+  border-bottom: 1px solid var(--shade);
+  padding-bottom: 1rem;
 }
