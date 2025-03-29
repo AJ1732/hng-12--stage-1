@@ -396,18 +396,18 @@ footer {
 }
 
 .game__status,
-.status--wrong,
-.status--correct {
+.game__status--wrong,
+.game__status--correct {
   font-size: var(--fs-lg);
 }
 
-.status--wrong {
+.game__status--wrong {
   color: red;
 }
-.status--wrong__anim {
+.game__status--wrong-anim {
   animation: shake 0.2s;
 }
-.status--correct {
+.game__status--correct {
   color: green;
   animation: fadeIn 0.5s cubic-bezier(1, -0.04, 0, 1.16);
 }
