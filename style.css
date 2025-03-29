@@ -89,6 +89,21 @@ a:visited {
   width: fit-content;
 }
 
+a.credit--author {
+  color: var(--primary-700);
+}
+a.credit--author:hover {
+  text-decoration: underline;
+}
+
+a.credit--source {
+  padding-inline: 0.5rem;
+  background-color: var(--secondary-700);
+}
+a.credit--source:hover {
+  text-decoration: underline;
+}
+
 button {
   all: unset;
   cursor: pointer;
@@ -353,12 +368,15 @@ main {
 }
 
 footer {
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 @media (min-width: 768px) {
   footer {
-    justify-content: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 
