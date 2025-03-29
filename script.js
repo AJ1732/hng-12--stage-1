@@ -14,7 +14,7 @@ class ColourGuess {
 
   setupElements() {
     this.colorBox = document.querySelector('[data-testid="colorBox"]');
-    this.optionsContainer = document.querySelector(".game__options__container");
+    this.optionsContainer = document.querySelector(".game__options-container");
     this.scoreElement = document.querySelector('[data-testid="score"]');
     this.highScoreElement = document.querySelector(".game__highscore");
     this.statusElement = document.querySelector('[data-testid="gameStatus"]');
@@ -80,9 +80,14 @@ class ColourGuess {
     this.colors.forEach((color) => {
       const button = document.createElement("button");
       button.setAttribute("data-testid", "colorOption");
-      button.style.backgroundColor = color;
+
+      const innerSpan = document.createElement("span");
+      innerSpan.classList.add("game__option__inner");
+      innerSpan.style.backgroundColor = color;
+
+      button.appendChild(innerSpan);
       button.addEventListener("click", () => {
-        this.handleGuess(color);
+        this.handleGuess(color, innerSpan);
       });
       this.optionsContainer.appendChild(button);
     });
@@ -140,33 +145,45 @@ class ColourGuess {
     this.statusElement.className = "game__status";
   }
 
-  handleGuess(guessedColor) {
+  handleGuess(guessedColor, innerSpan) {
     if (guessedColor === this.targetColor) {
       this.score++;
       this.scoreElement.textContent = `${this.score}`;
       this.updateHighScore();
       this.statusElement.textContent = "Correct!";
-      this.statusElement.className = "status--correct";
+      this.statusElement.className = "game__status--correct";
       setTimeout(() => this.startNewGame(), 1000);
     } else {
+      // REMOVE any previous wrong animation from all inner spans
       this.optionsContainer
-        .querySelectorAll('[data-testid="colorOption"]')
-        .forEach((button) => {
-          button.classList.remove("status--wrong__anim");
+        .querySelectorAll('[data-testid="colorOption"] .game__option__inner')
+        .forEach((span) => {
+          span.classList.remove("game__option__inner--wrong");
         });
 
       this.resetGame();
-      const wrongButton = Array.from(this.optionsContainer.children).find(
-        (button) => button.style.backgroundColor === guessedColor
+
+      // Make sure element is ready for animation
+      void innerSpan.offsetWidth;
+      // Start the animation
+      innerSpan.classList.add("game__option__inner--wrong");
+
+      // AFTER ANIMATION ENDS
+      innerSpan.addEventListener(
+        "animationend",
+        () => {
+          // HIDE the parent button element from the options container.
+          if (innerSpan.parentElement) {
+            // innerSpan.parentElement.remove();
+            innerSpan.parentElement.classList.add("game__option--hidden");
+          }
+        },
+        { once: true }
       );
 
-      if (wrongButton) {
-        void wrongButton.offsetWidth;
-        wrongButton.classList.add("guess--wrong");
-        this.statusElement.className = "status--wrong status--wrong__anim";
-      }
-
       this.statusElement.textContent = "Wrong! Try again";
+      this.statusElement.className =
+        "game__status--wrong game__status--wrong-anim";
     }
   }
 

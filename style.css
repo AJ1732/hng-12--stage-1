@@ -149,7 +149,7 @@ main {
   /* border: 1px solid var(--primary-500); */
 }
 
-.game__options__container {
+.game__options-container {
   position: absolute;
   inset: 0;
 }
@@ -165,9 +165,6 @@ main {
   left: 50%;
   width: 4.5rem;
   transform: translateX(-50%);
-  background-color: var(--secondary-500); /* DEFAULT COLOR */
-  box-shadow: var(--tw-shadow);
-  border: 1px solid var(--shade);
 }
 [data-testid="colorOption"]:nth-child(2) {
   top: 30%;
@@ -207,8 +204,8 @@ main {
   }
   [data-testid="colorOption"] {
     width: 6.5rem;
-    background-color: var(--secondary-500);
     top: 0.825rem;
+    /* background-color: var(--secondary-500); */
   }
   [data-testid="colorOption"]:nth-child(4) {
     right: 8%;
@@ -306,6 +303,55 @@ main {
   pointer-events: none;
 }
 
+.game__color-option__inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: transparent;
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.game__option--hidden {
+  visibility: hidden;
+}
+
+.game__option__inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform-origin: center;
+  box-shadow: var(--tw-shadow);
+  border: 1px solid var(--shade);
+  transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.game__option__inner--wrong {
+  animation: bouncyScaleCentral 0.6s ease-in-out forwards;
+}
+
+@keyframes bouncyScaleCentral {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(0.7);
+  }
+  80% {
+    transform: scale(0.4);
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
 footer {
   justify-content: center;
   align-items: center;
@@ -383,29 +429,6 @@ footer {
   }
   75% {
     transform: translateX(5px);
-  }
-}
-
-.guess--wrong {
-  animation: bouncyScale 0.6s ease-in-out forwards;
-}
-@keyframes bouncyScale {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  30% {
-    transform: scale(0.9);
-  }
-  60% {
-    transform: scale(0.7);
-  }
-  80% {
-    transform: scale(0.4);
-  }
-  100% {
-    transform: scale(0);
-    opacity: 0;
   }
 }
 
