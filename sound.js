@@ -1,7 +1,6 @@
 class GameSounds {
   constructor() {
     this.allowSound = false;
-    this.isBackgroundSoundPlaying = false;
     this.sounds = {
       "coin-recieved": null,
       "energy-drink-effect": null,
@@ -51,8 +50,8 @@ class GameSounds {
       bgToggle.classList.remove("fa-volume-high");
       bgToggle.classList.add("fa-volume-xmark");
 
+      // Make sure allowSound remains false.
       this.allowSound = false;
-      this.isBackgroundSoundPlaying = false;
 
       // TOGGLE the background sound.
       bgToggle.addEventListener("click", (e) => this.toggleBackgroundSound(e));
@@ -168,10 +167,9 @@ class GameSounds {
       this.sounds[soundName] = audio;
     }
     // Play and fade in IF ALLOWED
-    if (this.allowSound && !this.isBackgroundSoundPlaying) {
+    if (this.allowSound) {
       audio.play();
       this.fadeInAudio(audio, 0.2, 100);
-      this.isBackgroundSoundPlaying = true;
     }
   }
 
@@ -206,11 +204,8 @@ class GameSounds {
     const soundName = "ethereal-ambient-music";
     const audio = this.sounds[soundName];
 
-    if (this.isBackgroundSoundPlaying) {
-      // this.fadeOutAudio(audio, 100);
-      this.fadeOutAudio(audio, 100, () => {
-        this.isBackgroundSoundPlaying = false;
-      });
+    if (audio && !audio.paused) {
+      this.fadeOutAudio(audio, 100);
 
       // CHANGE ICON
       icon.classList.remove("fa-volume-high");
@@ -234,8 +229,7 @@ class GameSounds {
       icon.classList.remove("fa-volume-xmark");
       icon.classList.add("fa-volume-high");
 
-      // UPDATE allowSound flag and local storage
-      this.isBackgroundSoundPlaying = true;
+      // UPDATE local storage
       localStorage.setItem("backgroundSound", "on");
     }
   }
