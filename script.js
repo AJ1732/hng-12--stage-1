@@ -9,7 +9,7 @@ class ColourGuess {
     this.targetColor = "";
     this.setupElements();
     this.setupEventListeners();
-    this.loadHighScore();
+    this.loadScores(); 
     this.startNewGame();
   }
 
@@ -23,17 +23,30 @@ class ColourGuess {
       '[data-testid="newGameButton"]'
     );
 
+    this.updateScoreDisplay();
     this.updateHighScoreDisplay();
   }
 
-  loadHighScore() {
-    const savedScore = localStorage.getItem("colourGuessHighScore");
-    this.highScore = savedScore ? parseInt(savedScore) : 0;
+  loadScores() {
+    // Load HIGH SCORE
+    const savedHighScore = localStorage.getItem("colourGuessHighScore");
+    this.highScore = savedHighScore ? parseInt(savedHighScore) : 0;
+    
+    // Load CURRENT SCORE
+    const savedScore = localStorage.getItem("colourGuessScore");
+    this.score = savedScore ? parseInt(savedScore) : 0;
+    
+    this.updateScoreDisplay();
     this.updateHighScoreDisplay();
   }
 
-  saveHighScore() {
+  saveScores() {
     localStorage.setItem("colourGuessHighScore", this.highScore.toString());
+    localStorage.setItem("colourGuessScore", this.score.toString());
+  }
+
+  updateScoreDisplay() {
+    this.scoreElement.textContent = `${this.score}`;
   }
 
   updateHighScoreDisplay() {
@@ -47,7 +60,7 @@ class ColourGuess {
     });
 
     window.addEventListener("beforeunload", () => {
-      this.saveHighScore();
+      this.saveScores(); // Save both scores before unloading
     });
   }
 
@@ -145,7 +158,8 @@ class ColourGuess {
 
   resetGame() {
     this.score = 0;
-    this.scoreElement.textContent = `${this.score}`;
+    this.updateScoreDisplay();
+    this.saveScores(); 
     this.statusElement.textContent = "Ready Set Go!";
     this.statusElement.className = "game__status";
   }
@@ -153,8 +167,9 @@ class ColourGuess {
   handleGuess(e, guessedColor, innerSpan) {
     if (guessedColor === this.targetColor) {
       this.score++;
-      this.scoreElement.textContent = `${this.score}`;
+      this.updateScoreDisplay();
       this.updateHighScore();
+      this.saveScores(); 
       this.statusElement.textContent = "Correct!";
       this.statusElement.className = "game__status--correct";
 
@@ -199,11 +214,9 @@ class ColourGuess {
   }
 
   updateHighScore() {
-    this.highScoreElement.textContent = this.highScore;
-
     if (this.score > this.highScore) {
       this.highScore = this.score;
-      this.saveHighScore();
+      this.saveScores();
       this.updateHighScoreDisplay();
     }
   }
