@@ -1,3 +1,4 @@
+import { gameSounds } from "./sound.js";
 console.log("Hello, World!");
 
 class ColourGuess {
@@ -86,14 +87,16 @@ class ColourGuess {
       innerSpan.style.backgroundColor = color;
 
       button.appendChild(innerSpan);
-      button.addEventListener("click", () => {
-        this.handleGuess(color, innerSpan);
+      button.addEventListener("click", (e) => {
+        this.handleGuess(e, color, innerSpan);
       });
       this.optionsContainer.appendChild(button);
     });
   }
 
-  startNewGame() {
+  startNewGame(e) {
+    if (e) e.preventDefault();
+
     this.colors = [];
     this.statusElement.textContent = "Ready Set Go!";
     this.statusElement.className = "game__status";
@@ -112,6 +115,8 @@ class ColourGuess {
 
     if (this.score === 0) {
       this.newGameButton.classList.add("game__start");
+      // PLAY SOUND
+      gameSounds.playNewGame(e);
     } else {
       this.newGameButton.classList.remove("game__start");
     }
@@ -145,15 +150,21 @@ class ColourGuess {
     this.statusElement.className = "game__status";
   }
 
-  handleGuess(guessedColor, innerSpan) {
+  handleGuess(e, guessedColor, innerSpan) {
     if (guessedColor === this.targetColor) {
       this.score++;
       this.scoreElement.textContent = `${this.score}`;
       this.updateHighScore();
       this.statusElement.textContent = "Correct!";
       this.statusElement.className = "game__status--correct";
+
+      // PLAY SOUND
+      gameSounds.playCorrectGuess(e);
       setTimeout(() => this.startNewGame(), 1000);
     } else {
+      // PLAY SOUND
+      gameSounds.playWrongGuess(e);
+
       // REMOVE any previous wrong animation from all inner spans
       this.optionsContainer
         .querySelectorAll('[data-testid="colorOption"] .game__option__inner')

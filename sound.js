@@ -106,12 +106,24 @@ class GameSounds {
   }
 
   playNewGame(e) {
-    e.preventDefault();
-    const target = e.currentTarget;
-    target.setAttribute("data-file", "game-start");
-    this.playSound(e);
+    if (e && e.currentTarget) {
+      e.preventDefault();
+      const target = e.currentTarget;
+      target.setAttribute("data-file", "game-start");
+      this.playSound(e);
+    } else {
+      // NO EVENT PASSED, so create a dummy target element
+      const dummyTarget = document.createElement("button");
+      dummyTarget.setAttribute("data-file", "game-start");
+      // CREATE a fake event object
+      const fakeEvent = {
+        preventDefault: () => {},
+        currentTarget: dummyTarget,
+      };
+      this.playSound(fakeEvent);
+    }
   }
 }
 
-const gameSounds = new GameSounds();
+export const gameSounds = new GameSounds();
 gameSounds.setupElements();
