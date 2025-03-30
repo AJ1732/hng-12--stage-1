@@ -1,6 +1,7 @@
 class GameSounds {
   constructor() {
-    this.allowSound = true;
+    this.allowSound =
+      localStorage.getItem("backgroundSound") !== "off" ? true : false;
     this.sounds = {
       "coin-recieved": null,
       "energy-drink-effect": null,
@@ -10,13 +11,13 @@ class GameSounds {
   }
 
   setupElements() {
-    // CREDIT PLAY BUTTONS
+    // CREDIT PLAY BUTTONS (using data-file)
     this.playButtons = document.querySelectorAll("button[data-file]");
     this.playButtons.forEach((button) => {
       button.addEventListener("click", (e) => this.playSound(e));
     });
 
-    // GUESS BUTTONS
+    // GUESS BUTTONS (using data-guess)
     document.querySelectorAll("button[data-guess]").forEach((button) => {
       button.addEventListener("click", (e) => {
         e.preventDefault();
@@ -36,10 +37,31 @@ class GameSounds {
         }
       });
     });
+
+    // BACKGROUND MUSIC CONTROL
+    const bgToggle = document.querySelector('[data-guess="background"]');
+    if (bgToggle) {
+      const savedBgSound = localStorage.getItem("backgroundSound");
+      if (savedBgSound === "off") {
+        bgToggle.classList.remove("fa-volume-high");
+        bgToggle.classList.add("fa-volume-xmark");
+        this.allowSound = false;
+      } else {
+        bgToggle.classList.remove("fa-volume-xmark");
+        bgToggle.classList.add("fa-volume-high");
+        this.allowSound = true;
+      }
+      // TOGGLE the background sound.
+      bgToggle.addEventListener("click", (e) => this.toggleBackgroundSound(e));
+    }
+
+    // AUTO PLAY background music
+    this.playBackgroundMusic();
   }
 
   stopSound() {
     this.allowSound = false;
+    localStorage.setItem("backgroundSound", "off");
   }
 
   playSound(e) {
@@ -121,6 +143,90 @@ class GameSounds {
         currentTarget: dummyTarget,
       };
       this.playSound(fakeEvent);
+    }
+  }
+
+  // BACKGROUND MUSIC METHOD
+  playBackgroundMusic() {
+    const soundName = "ethereal-ambient-music";
+    const soundSrc = "./sounds/" + soundName + ".mp3";
+
+    // CREATE or GET the audio element
+    let audio = this.sounds[soundName];
+    if (!audio) {
+      audio = document.createElement("audio");
+      audio.src = soundSrc;
+      audio.loop = true;
+      // START with fade-in effect
+      audio.volume = 0;
+      audio.setAttribute("data-file", soundName);
+      document.body.appendChild(audio);
+      this.sounds[soundName] = audio;
+    }
+    // Play and fade in if allowed
+    if (this.allowSound) {
+      audio.play();
+      this.fadeInAudio(audio, 0.2, 100);
+    }
+  }
+
+  fadeInAudio(audio, targetVolume, intervalTime) {
+    const fadeInInterval = setInterval(() => {
+      if (audio.volume < targetVolume) {
+        audio.volume = Math.min(audio.volume + 0.02, targetVolume);
+      } else {
+        clearInterval(fadeInInterval);
+      }
+    }, intervalTime);
+  }
+
+  fadeOutAudio(audio, intervalTime, callback) {
+    const fadeOutInterval = setInterval(() => {
+      if (audio.volume > 0.02) {
+        audio.volume = Math.max(audio.volume - 0.02, 0);
+      } else {
+        clearInterval(fadeOutInterval);
+        audio.pause();
+        if (callback) callback();
+      }
+    }, intervalTime);
+  }
+
+  toggleBackgroundSound(e) {
+    e.preventDefault();
+    const icon = e.currentTarget;
+    const soundName = "ethereal-ambient-music";
+    const audio = this.sounds[soundName];
+
+    if (audio && !audio.paused) {
+      this.fadeOutAudio(audio, 100);
+
+      // CHANGE ICON
+      icon.classList.remove("fa-volume-high");
+      icon.classList.add("fa-volume-xmark");
+
+      // UPDATE allowSound flag
+      this.allowSound = false;
+
+      // UPDATE LOCAL STORAGE
+      localStorage.setItem("backgroundSound", "off");
+    } else {
+      this.allowSound = true;
+
+      // If audio already exists, RESUME - otherwise create it.
+      if (audio) {
+        audio.play();
+        this.fadeInAudio(audio, 0.2, 100);
+      } else {
+        this.playBackgroundMusic();
+      }
+
+      // CHANGE ICON
+      icon.classList.remove("fa-volume-xmark");
+      icon.classList.add("fa-volume-high");
+
+      // UPDATE LOCAL STORAGE
+      localStorage.setItem("backgroundSound", "on");
     }
   }
 }

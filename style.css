@@ -117,6 +117,7 @@ button:active {
 }
 
 /* DISPLAY FLEX */
+header,
 main,
 .game__details,
 .game__scores,
@@ -131,6 +132,12 @@ footer {
 }
 .title__dot {
   color: var(--primary-700);
+}
+
+header {
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
 main {
