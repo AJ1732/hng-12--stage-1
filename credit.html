@@ -64,9 +64,9 @@
   </head>
   <body>
     <main class="layout" style="place-content: center">
-      <!-- NEW GAME SOUND -->
+      <!-- CORRECT GUESS SOUND -->
       <div class="credit">
-        <button>
+        <button data-file="game-start">
           <i class="fa-solid fa-play"></i>
           Play
         </button>
@@ -88,7 +88,7 @@
 
       <!-- BACKGROUND MUSIC -->
       <div class="credit">
-        <button>
+        <button data-file="ethereal-ambient-music">
           <i class="fa-solid fa-play"></i>
           Play
         </button>
@@ -108,14 +108,14 @@
         </p>
       </div>
 
-      <!-- CORRECT GUESS SOUND -->
+      <!-- NEW GAME & CORRECT GUESS SOUND -->
       <div class="credit">
         <div style="display: flex; gap: 1rem">
-          <button>
+          <button data-file="energy-drink-effect">
             <i class="fa-solid fa-play"></i>
             Play
           </button>
-          <button>
+          <button data-file="coin-recieved">
             <i class="fa-solid fa-play"></i>
             Play
           </button>
@@ -136,6 +136,21 @@
         </p>
       </div>
 
+      <!-- <button data-guess="correct">
+        <i class="fa-solid fa-play"></i>
+        Play Correct Guess
+      </button>
+
+      <button data-guess="wrong">
+        <i class="fa-solid fa-play"></i>
+        Play Wrong Guess
+      </button>
+
+      <button data-guess="new-game">
+        <i class="fa-solid fa-play"></i>
+        Play New Game
+      </button> -->
+
       <a
         href="/index.html"
         style="
@@ -150,5 +165,7 @@
         <i style="font-size: 1.25rem">Back</i>
       </a>
     </main>
+
+    <script src="./sound.js"></script>
   </body>
 </html>
