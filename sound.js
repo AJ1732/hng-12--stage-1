@@ -1,13 +1,17 @@
 class GameSounds {
   constructor() {
-    this.allowSound =
-      localStorage.getItem("backgroundSound") !== "off" ? true : false;
+    this.allowSound = false;
     this.sounds = {
       "coin-recieved": null,
       "energy-drink-effect": null,
       "ethereal-ambient-music": null,
       "game-start": null,
     };
+
+    // SET STATE TO OFF
+    if (!localStorage.getItem("backgroundSound")) {
+      localStorage.setItem("backgroundSound", "off");
+    }
   }
 
   setupElements() {
@@ -38,19 +42,17 @@ class GameSounds {
       });
     });
 
-    // BACKGROUND MUSIC CONTROL
+    // BACKGROUND MUSIC CONTROL (volume icon)
     const bgToggle = document.querySelector('[data-guess="background"]');
     if (bgToggle) {
-      const savedBgSound = localStorage.getItem("backgroundSound");
-      if (savedBgSound === "off") {
-        bgToggle.classList.remove("fa-volume-high");
-        bgToggle.classList.add("fa-volume-xmark");
-        this.allowSound = false;
-      } else {
-        bgToggle.classList.remove("fa-volume-xmark");
-        bgToggle.classList.add("fa-volume-high");
-        this.allowSound = true;
-      }
+      // SET stored state to be "off"
+      localStorage.setItem("backgroundSound", "off");
+      bgToggle.classList.remove("fa-volume-high");
+      bgToggle.classList.add("fa-volume-xmark");
+
+      // Make sure allowSound remains false.
+      this.allowSound = false;
+
       // TOGGLE the background sound.
       bgToggle.addEventListener("click", (e) => this.toggleBackgroundSound(e));
     }
@@ -78,7 +80,7 @@ class GameSounds {
       this.sounds[soundName] = null;
     }
 
-    console.log(soundSrc);
+    // console.log(soundSrc);
 
     // CREATE AUDIO ELEMENT
     let audio = document.createElement("audio");
@@ -157,19 +159,21 @@ class GameSounds {
       audio = document.createElement("audio");
       audio.src = soundSrc;
       audio.loop = true;
+
       // START with fade-in effect
       audio.volume = 0;
       audio.setAttribute("data-file", soundName);
       document.body.appendChild(audio);
       this.sounds[soundName] = audio;
     }
-    // Play and fade in if allowed
+    // Play and fade in IF ALLOWED
     if (this.allowSound) {
       audio.play();
       this.fadeInAudio(audio, 0.2, 100);
     }
   }
 
+  // GRADUALLY INCREASE VOLUME TO TARGET VOLUME
   fadeInAudio(audio, targetVolume, intervalTime) {
     const fadeInInterval = setInterval(() => {
       if (audio.volume < targetVolume) {
@@ -180,6 +184,7 @@ class GameSounds {
     }, intervalTime);
   }
 
+  // GRADUALLY DESCREASE VOLUME TO TARGET VOLUME
   fadeOutAudio(audio, intervalTime, callback) {
     const fadeOutInterval = setInterval(() => {
       if (audio.volume > 0.02) {
@@ -192,6 +197,7 @@ class GameSounds {
     }, intervalTime);
   }
 
+  // TOGGLE BACKGROUND MUSIC METHOD
   toggleBackgroundSound(e) {
     e.preventDefault();
     const icon = e.currentTarget;
@@ -225,7 +231,7 @@ class GameSounds {
       icon.classList.remove("fa-volume-xmark");
       icon.classList.add("fa-volume-high");
 
-      // UPDATE LOCAL STORAGE
+      // UPDATE local storage
       localStorage.setItem("backgroundSound", "on");
     }
   }
