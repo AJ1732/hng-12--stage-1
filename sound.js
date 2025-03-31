@@ -169,7 +169,7 @@ class GameSounds {
     // Play and fade in IF ALLOWED
     if (this.allowSound) {
       audio.play();
-      this.fadeInAudio(audio, 0.2, 100);
+      this.fadeInAudio(audio, 0.2, 0.2);
     }
   }
 
@@ -220,7 +220,7 @@ class GameSounds {
       // If audio already exists, RESUME - otherwise create it.
       if (audio) {
         audio.play();
-        this.fadeInAudio(audio, 0.2, 100);
+        this.fadeInAudio(audio, 0.2, 0.2);
       } else {
         this.playBackgroundMusic();
       }
